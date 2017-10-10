@@ -6,20 +6,19 @@ use yii\bootstrap\Modal;
 
 
 Modal::begin([
-    'header'=>'<h4>Сброс пароля</h4>',
     'id'=>'reset-modal',
 ]);
 ?>
 
-    <p>Для смены пароля введите секретную фразу:</p>
-
+    <p style="color:black">Для смены пароля введите секретную фразу:</p>
+    <div  id="info-reset" style="color:red"></div>
 <?php $form = ActiveForm::begin([
     'id' => 'reset-form',
     'enableAjaxValidation' => true,
     'action' => ['site/ajax-reset']
 ]);
 echo $form->field($model, 'password_secret_phrase')->textInput(['id' => 'secret-phrase'])->label('фраза для смены пароля');
-echo $form->field($model, 'password')->passwordInput(['class' => 'hidden','id'=>'refresh-password'])->label(false);
+echo $form->field($model, 'password')->passwordInput(['id'=>'refresh-password','readonly'=>'readonly'])->label('поле станет активным если фраза верна',['id'=>'pass-label']);
 ?>
 
     <div class="form-group">
@@ -27,7 +26,7 @@ echo $form->field($model, 'password')->passwordInput(['class' => 'hidden','id'=>
 
             <?php
             echo Html::button('Отмена', ['class' => 'btn btn-default', 'data-dismiss' => 'modal','style'=>'margin:5px;']);
-            echo Html::submitButton('Сменить пароль', ['class' => 'btn btn-primary', 'name' => 'reset-button','style'=>'margin:5px;']);
+            echo Html::submitButton('проверить фразу', ['class' => 'btn btn-primary','id'=>'reset-button', 'name' => 'reset-button','style'=>'margin:5px;']);
             ?>
 
         </div>

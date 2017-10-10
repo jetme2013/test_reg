@@ -1,24 +1,25 @@
+var resetModal = $('#reset-modal .modal-body #reset-form');
 
-function showWindow(res) {
-    resetModal.html(res);
-    $('#reset-modal').modal('show');
-}
-
-var resetModal = $('#reset-modal .modal-body');
 
 resetModal.on('submit', function (e) {
-    $('.modal-body #refresh-password').show();
-    console.log(e);
+   // $('.modal-body #refresh-password').removeAttr('hidden');
+    var refresh = $('.modal-body #reset-form #refresh-password');
+    console.log( $(this).serialize() );
     e.preventDefault();
 
     $.ajax({
         url:'site/ajax-reset',
-        data:{},
-        type:'GET',
+        dataType:'JSON',
+        data:$(this).serialize(),
+        type:'POST',
         success:function (res) {
-            if(!res)console.log('error res');
+            //if(!res)console.log('error res');
+            $('.modal-body #info-reset').html(res);
+            if(res==='введите новый пароль'){
+                refresh.removeAttr('readonly');
+                $('.modal-body #reset-form #reset-button').text('сменить пароль');
+            }
             //console.log(res);
-            showWindow(res);
         },
         error:function () {
             console.log('error');

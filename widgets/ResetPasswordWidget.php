@@ -23,7 +23,6 @@ class ResetPasswordWidget extends Widget
         }else{
             return false;
         }
-
     }
 
 }

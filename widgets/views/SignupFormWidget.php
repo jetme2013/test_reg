@@ -5,7 +5,6 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 
 Modal::begin([
-    'header' => '<h4>signup</h4>',
     'id' => 'signup-modal',
 ]);
 
@@ -14,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
     <div class="site-signup">
-        <p>Please fill out the following fields to signup:</p>
+        <p style="color:black">Please fill out the following fields to signup:</p>
 
         <?php $form = ActiveForm::begin(['id' => 'form-signup',
             'enableAjaxValidation' => true,

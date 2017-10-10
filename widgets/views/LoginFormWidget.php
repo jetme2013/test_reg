@@ -5,17 +5,16 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 
 Modal::begin([
-    'header'=>'<h4>Login</h4>',
     'id'=>'login-modal',
 ]);
 ?>
 
-    <p>Please fill out the following fields to login:</p>
+    <p style="color:black">Please fill out the following fields to login:</p>
 
 <?php $form = ActiveForm::begin([
     'id' => 'login-form',
     'enableAjaxValidation' => true,
-    'action' => ['site/ajax-login']
+    'action' => ['site/ajax-login'],
 ]);
 echo $form->field($model, 'username')->textInput();
 echo $form->field($model, 'password')->passwordInput();

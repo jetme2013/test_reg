@@ -4,8 +4,6 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
 
 use app\assets\AppAsset;
 use app\widgets\LoginFormWidget;
@@ -30,59 +28,58 @@ AppAsset::register($this);
 <?= (Yii::$app->user->isGuest ? LoginFormWidget::widget([]) : ''); ?>
 <?= SignupFormWidget::widget([]); ?>
 <?= (!(Yii::$app->user->isGuest) ? ResetPasswordWidget::widget([]) : ''); ?>
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            Yii::$app->user->isGuest ? (
-            ['label' => 'Регистрация', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#signup-modal']])
-                : (
-                        ['label'=>'']
-            ),
-            Yii::$app->user->isGuest ? (
-            ['label' => 'Вход', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#login-modal']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Выйти (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            ),
 
-             !(Yii::$app->user->isGuest) ? (
-             ['label' => 'Сменить пароль', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#reset-modal']]) :
-                 (['label' => '']),
+<div class="container">
 
-
-        ],
-    ]);
-    NavBar::end();
-    ?>
-
-    <div class="container">
-
-        <?= $content ?>
-    </div>
+    <?= $content ?>
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+<div class="site-wrapper">
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+    <div class="site-wrapper-inner">
+
+        <div class="container">
+
+            <div class="masthead clearfix">
+                <div class="container inner">
+                    <h3 class="masthead-brand">Cover</h3>
+                    <nav>
+                        <ul class="nav masthead-nav">
+                            <?php if (Yii::$app->user->isGuest) {
+                                echo '<li class="active">' .
+                                    Html::a(
+                                        'Вход', '#', ['data-toggle' => 'modal', 'data-target' => '#login-modal'])
+                                    . '</li>';
+                            } else {
+                                echo '<li>' . '<a href="#">'
+                                    . Html::beginForm(['/site/logout'], 'post')
+                                    . Html::submitButton(
+                                        'Выйти (' . Yii::$app->user->identity->username . ')',
+                                        ['class' => 'logout']
+                                    )
+                                    . Html::endForm()
+                                    . '</a>' . '</li>';
+                            }
+
+                            echo '<li>' . Html::a('Регистрация', '#', ['data-toggle' => 'modal', 'data-target' => '#signup-modal']) . '</li>';
+                            if (!Yii::$app->user->isGuest)
+                                echo '<li>' . Html::a('Сменить пароль', '#', ['data-toggle' => 'modal', 'data-target' => '#reset-modal']) . '</li>';
+                            ?>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="inner cover">
+                <h1 class="cover-heading">Запрос: SELECT u.username,l.user_id,count(*) FROM yii2basic.users_log l join yii2basic.user u ON l.user_id=u.id group by(l.user_id);</h1>
+                    <a href="#" class="btn btn-lg btn-default">Learn more</a>
+                </p>
+            </div>
+
+        </div>
+
     </div>
-</footer>
+</div>
 
 <?php $this->endBody() ?>
 </body>
